@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/HappyValentinesDay/static/css/main.3c391960.css",
+    "main.css": "/HappyValentinesDay/static/css/main.b310d4c3.css",
     "main.js": "/HappyValentinesDay/static/js/main.d5f83644.js",
     "static/js/885.7cf993f8.chunk.js": "/HappyValentinesDay/static/js/885.7cf993f8.chunk.js",
     "static/js/453.d9b2e092.chunk.js": "/HappyValentinesDay/static/js/453.d9b2e092.chunk.js",
@@ -8,13 +8,13 @@
     "static/media/cute-bear.gif": "/HappyValentinesDay/static/media/cute-bear.5b08729bd8df49a2c221.gif",
     "static/media/cute-bear2.gif": "/HappyValentinesDay/static/media/cute-bear2.46559fa4e53209ebaaeb.gif",
     "index.html": "/HappyValentinesDay/index.html",
-    "main.3c391960.css.map": "/HappyValentinesDay/static/css/main.3c391960.css.map",
+    "main.b310d4c3.css.map": "/HappyValentinesDay/static/css/main.b310d4c3.css.map",
     "main.d5f83644.js.map": "/HappyValentinesDay/static/js/main.d5f83644.js.map",
     "885.7cf993f8.chunk.js.map": "/HappyValentinesDay/static/js/885.7cf993f8.chunk.js.map",
     "453.d9b2e092.chunk.js.map": "/HappyValentinesDay/static/js/453.d9b2e092.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3c391960.css",
+    "static/css/main.b310d4c3.css",
     "static/js/main.d5f83644.js"
   ]
 }
