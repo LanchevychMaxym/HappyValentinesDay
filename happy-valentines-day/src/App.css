@@ -70,7 +70,7 @@
 }
 
 .mainblockYes {
-  margin-top: calc(25% - 70px);
+  margin-top: calc(20% - 70px);
   display: flex;
   flex-direction: column;
   justify-content: center;
