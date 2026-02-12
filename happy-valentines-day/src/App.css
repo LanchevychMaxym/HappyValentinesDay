@@ -101,7 +101,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden
+  overflow: hidden;
+  pointer-events: none; /* allow clicks to pass through to UI */
+  z-index: 0;
 }
 
 .heart {
@@ -111,6 +113,10 @@
   -moz-transform: rotate(-45deg);
   -m-transform: rotate(-45deg);
   transform: rotate(-45deg)
+}
+
+.heart, .photo {
+  pointer-events: none; /* don't block pointer events */
 }
 
 .heart:before {
@@ -135,6 +141,163 @@
   height: 100%;
   background: inherit;
   border-radius: 100%;
+}
+
+.photo {
+  position: absolute;
+  top: -50%;
+  transform: none;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* New generic floating animation */
+.floating-item {
+  position: absolute;
+  bottom: -20vh;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.photo-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.heart-item {
+  border-radius: 6px;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-140vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.gif-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.love-subtitle {
+  width: 300px;
+  text-align: right;
+  margin: 8px 0 0 0;
+}
+.love-subtitle-wrapper {
+  width: 300px;
+  text-align: right;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.love-action {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.love-symbol {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg,#fff6fb,#ffdfee);
+  color: #c3196b;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(195,25,107,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  /* z-index: 12; */
+  animation: love-pulse 2000ms ease-in-out infinite;
+  margin-top: 0;
+}
+
+.love-symbol:hover {
+  transform: scale(1.12);
+  box-shadow: 0 12px 28px rgba(195,25,107,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+.love-symbol:active {
+  transform: scale(0.98);
+}
+
+.love-symbol::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 105, 180, 0.65);
+  pointer-events: none;
+  animation: love-ring 1600ms cubic-bezier(.22,.9,.36,1) infinite;
+  /* z-index: 11; */
+}
+
+@keyframes love-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes love-ring {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.7); }
+  60% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.4); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
+}
+
+.love-tooltip {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 8px);
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  /* z-index: 50; */
+}
+
+.love-tooltip {
+  transform-origin: top center;
+  animation: tooltip-pop 180ms ease;
+}
+
+@keyframes tooltip-pop {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 @-webkit-keyframes love {

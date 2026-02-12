@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import useSound from 'use-sound'
-import gif from './assets/cute-bear.gif'
-import gif2 from './assets/cute-bear2.gif'
+import gif from './assets/cats.gif'
+import gif2 from './assets/cat-kiss.gif'
+import mySound1 from './assets/music6.mp3'
 import mySound from './assets/music3.mp3'
 
 function App() {
 
+  // try to load photos from ./assets/us (webpack require.context). If folder absent, photoUrls will be empty.
+  let photoUrls: string[] = [];
+  try {
+    // @ts-ignore: webpack require.context
+    const req = (require as any).context('./assets/us', false, /\.(png|jpe?g|gif|webp)$/);
+    
+    photoUrls = req.keys().map((k: string) => req(k));
+  } catch (e) {
+    photoUrls = [];
+  }
   const [count, setCount] = useState(0);
   const [noVisible, setNoVisible] = useState(true);
   const [yesClicked, setYesClicked] = useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [yesHeight, setYesHeight] = useState(40)
   const [fontSize, setFontSize] = useState(20)
-  const [playSound, { pause }] = useSound(mySound, {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [playSound, { pause, stop }] = useSound(mySound1, {
     onplay: () => setIsPlaying(true),
     onend: () => setIsPlaying(true),
   });
@@ -43,7 +55,7 @@ function App() {
   const onClickYes = () => {
     setYesClicked(true)
     playSound()
-    heartsAnimation()
+    photosAnimation()
   }
 
   const heartsAnimation = () => {
@@ -68,10 +80,33 @@ function App() {
   }, 500);
   }
 
+  const photosAnimation = () => {
+    console.log(photoUrls)
+    if (!photoUrls || photoUrls.length === 0) {
+      heartsAnimation();
+      return;
+    }
 
-  useEffect(() => {
-    playSound()
-  }, []);
+    var love = setInterval(function() {
+      var r_num = Math.floor(Math.random() * 40) + 1;
+      var r_size = Math.floor(Math.random() * 130) + 60; // photos 2x larger
+      var r_left = Math.floor(Math.random() * 100) + 1;
+      var r_time = Math.floor(Math.random() * 10) + 10; // animation 2x slower
+      var photo = photoUrls[Math.floor(Math.random() * photoUrls.length)];
+
+      console.log(photo)
+      $('.bg_heart').append("<div class='photo' style='width:" + r_size + "px;height:" + r_size + "px;left:" + r_left + "%;-webkit-animation:love " + r_time + "s ease;-moz-animation:love " + r_time + "s ease;-ms-animation:love " + r_time + "s ease;animation:love " + r_time + "s ease'><img src='" + photo + "' style='width:100%;height:100%;object-fit:cover;border-radius:8px;'/></div>");
+
+      $('.photo').each(function() {
+          var top = $(this).css("top").replace(/[^-\d\.]/g, '');
+          var width = $(this).css("width").replace(/[^-\d\.]/g, '');
+          if (Number(top) <= -100 || Number(width) >= 300) {
+              $(this).detach();
+          }
+      });
+  }, 600);
+  }
+
 
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
@@ -91,8 +126,8 @@ function App() {
           <div className='mainblock'>
 
             <div className='MainText'>
-              <img src={gif}></img>
-              <h1>Ти будеш моєю Валентинкою?</h1>
+              <img src={gif} className='gif-image'></img>
+              <h1>Скучила?</h1>
               <div className='buttons'>
                 <button className="mybtn btn btn-success" onClick={onClickYes} style={{ height: `${yesHeight}px`, width: `${yesHeight}px`, fontSize: `${fontSize}px` }}>Так</button>
                 {noVisible == true ? <button className="mybtn btn btn-danger" onClick={onClickNo} style={{ maxHeight: `60px` }}>{noOptions[count]}</button> : null}
@@ -100,8 +135,15 @@ function App() {
             </div>
           </div> :
           <div className='mainblockYes'>
-            <img src={gif2}></img>
-            <h1>Ти моя киця 😘💖</h1>
+            <img src={gif2} className='gif-image'></img>
+            <h1>Кохаю тебе 😘💖</h1>
+            <div className='love-subtitle-wrapper'>
+              <div className='love-action'>
+                <button className='love-symbol' onClick={() => setTooltipOpen(!tooltipOpen)} aria-label="show-more">💌</button>
+                {tooltipOpen && <div className='love-tooltip'>А решта скажу особисто 💘</div>}
+              </div>
+              <h6 className='love-subtitle'>Дуже дуже сильно!❤️</h6>
+            </div>
             <div className="bg_heart"></div>
           </div>}
     </div>
